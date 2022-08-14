@@ -32,5 +32,19 @@ app.use(morgan('dev'))
 app.get("/", (req, res) => {
     res.send("hello world")
   })
-  
-app.listen(PORT, () => console.log(`listening on PORT ${PORT}`)); 
+
+  //Posts  
+
+
+  //Comments
+
+
+  //Media
+
+
+  //User
+
+
+
+
+app.listen(PORT, () => console.log(`listening on PORT ${PORT}.`)); 
