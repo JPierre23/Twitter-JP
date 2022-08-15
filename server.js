@@ -1,7 +1,9 @@
 require("dotenv").config()
 
 // Models 
-
+const User = require("./User");
+const Post = require("./Post");
+const Media=require("./Media");
 
 // Configs
 const PORT = process.env.PORT||3001
@@ -33,18 +35,106 @@ app.get("/", (req, res) => {
     res.send("hello world")
   })
 
-  //Posts  
+  //User
+  app.get("/user", async(req,res)=>{
+    try{
+     res.json(await User.find({}))
+    }catch{err=>console.log(err)}
+  })
+  app.get("/user/:id", async(req,res)=>{
+    try{
+      res.json(await User.findByIdAndUpdate(req.params.id))
+    }catch{err=>console.log(err)}
+  })
+  app.post("/user", async(req,res)=>{
+    try{
+      res.json(await User.create(req.body))
+    }catch{err=>console.log(err)}
+  })
+  app.delete("/user/:id",async(req,res)=>{
+    try{
+      res.json(await User.findByIdAndDelete(req.params.id))
+    }catch{err=>console.log(err)}
+  })
 
+  app.put("/user/:id",async(req,res)=>{
+    try{
+      res.json(await User.findByIdAndUpdate(req.params.id,req.body,{new:true}))
+    }catch{err=>console.log(err)}
+  })
+
+  //Posts  
+  app.get("/post", async(req,res)=>{
+    try{
+      res.json(await Post.find({}))
+    }catch{err=>console.log(err)}
+  })
+  app.get("/post/:id", async(req,res)=>{
+    try{
+     res.json(await Post.findByIdAndUpdate(req.params.id))
+    }catch{err=>console.log(err)}
+  })
+  app.post("/post", async(req,res)=>{
+    try{
+      res.json(await Post.create(req.body))
+    }catch{err=>console.log(err)}
+  })
+  app.delete("/post/:id",async(req,res)=>{
+    try{
+     res.json(await Post.findByIdAndDelete(req.params.id))
+    }catch{err=>console.log(err)}
+  })
+
+  app.put("/post/:id",async(req,res)=>{
+    try{
+      res.json(await Post.findByIdAndUpdate(req.params.id,req.body,{new:true}))
+    }catch{err=>console.log(err)}
+  })
 
   //Comments
+  app.get("/comment/:id", async(req,res)=>{
+    try{
+      res.json(await Comment.findByIdAndUpdate(req.params.id))
+    }catch{err=>console.log(err)}
+  })
+  app.post("/comment", async(req,res)=>{
+    try{
+      res.json(await Comment.create(req.body))
+    }catch{err=>console.log(err)}
+  })
+  app.delete("/comment/:id",async(req,res)=>{
+    try{
+      res.json(await Comment.findByIdAndDelete(req.params.id))
+    }catch{err=>console.log(err)}
+  })
 
+  app.put("/comment/:id",async(req,res)=>{
+    try{
+      res.json(await Comment.findByIdAndUpdate(req.params.id,req.body,{new:true}))
+      }catch{err=>console.log(err)}
+  })
 
   //Media
+  app.get("/media/:id", async(req,res)=>{
+    try{
+      res.json(await Media.findByIdAndUpdate(req.params.id))
+  }catch{err=>console.log(err)}
+})
+  app.post("/media", async(req,res)=>{
+    try{
+      res.json(await Media.create(req.body))
+    }catch{err=>console.log(err)}
+  })
+  app.delete("/media/:id",async(req,res)=>{
+    try{
+      res.json(await Media.findByIdAndDelete(req.params.id))
+    }catch{err=>console.log(err)}
+  })
 
-
-  //User
-
-
-
+  app.put("/media/:id",async(req,res)=>{
+    try{
+      res.json(await Media.findByIdAndUpdate(req.params.id,req.body,{new:true}))
+    }catch{err=>console.log(err)}
+  })
 
 app.listen(PORT, () => console.log(`listening on PORT ${PORT}.`)); 
