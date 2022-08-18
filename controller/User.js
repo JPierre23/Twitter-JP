@@ -63,7 +63,6 @@ router.get("/login", (req,res) =>{
 
   router.get("/feed", (req,res) =>{
     if (!req.session.loggedIn) res.redirect('/user/login')
-    
     res.render("feed.ejs")
   })
   
