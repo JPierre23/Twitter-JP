@@ -1,9 +1,9 @@
 require("dotenv").config()
 
 // Models 
-const User = require("./User");
-const Post = require("./Post");
-const Media=require("./Media");
+const User = require("./model/User");
+const Post = require("./model/Post");
+const Media=require("./model/Media");
 
 // Configs
 const PORT = process.env.PORT||3001
@@ -12,7 +12,9 @@ const mongoose = require("mongoose")
 const app = express()
 const cors = require("cors")
 const morgan = require("morgan")
-
+const bcrypt = require('bcrypt')
+const session=require('cookie-session')
+const methodOverride = require("method-override");
 
 // DB Setup
 mongoose.connect(process.env.DATABASE_URL, {
@@ -28,20 +30,30 @@ db.on("open", () => console.log("The Mongo Connection is Open"))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use("/static", express.static("static"))
+app.use(methodOverride("_method"));
 app.use(cors());
 app.use(morgan('dev'))
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+app.use(
+  session({
+    "name":"session",
+    "secret":process.env.ACCESS_TOKEN_SECRET,
+    "expires":new Date(Date.now() + 24 * 60 * 60 * 1000)
+  })
+);
+
+const UserRouter = require("./controller/User");
+app.use("/user", UserRouter);
 app.options('*', cors())
 
-app.get("/", (req, res) => {
-    res.send("hello world")
-  })
-
+app.get("/", (req,res) =>{
+  if(req.session.loggedIn){
+      res.render("userprofile.ejs",{currentUser:req.session.user})
+  }else{
+      res.render("login.ejs");
+  }
+})
   //User
+ 
   app.get("/user", async(req,res)=>{
     try{
      res.json(await User.find({}))
@@ -53,6 +65,7 @@ app.get("/", (req, res) => {
     }catch{err=>console.log(err)}
   })
   app.post("/user", async(req,res)=>{
+    
     try{
       res.json(await User.create(req.body))
     }catch{err=>console.log(err)}
@@ -62,6 +75,7 @@ app.get("/", (req, res) => {
       res.json(await User.findByIdAndDelete(req.params.id))
     }catch{err=>console.log(err)}
   })
+
 
   app.put("/user/:id",async(req,res)=>{
     try{
@@ -77,23 +91,35 @@ app.get("/", (req, res) => {
   })
   app.get("/post/:id", async(req,res)=>{
     try{
-     res.json(await Post.findByIdAndUpdate(req.params.id))
+     res.render("edit.ejs",{})
+    }catch{err=>console.log(err)}
+  })
+  app.get("/newpost", async(req,res)=>{
+    try{
+      res.render("new.ejs")
     }catch{err=>console.log(err)}
   })
   app.post("/post", async(req,res)=>{
     try{
-      res.json(await Post.create(req.body))
+      await Post.create(req.body)
+      res.redirect("/user/profile")
     }catch{err=>console.log(err)}
   })
   app.delete("/post/:id",async(req,res)=>{
     try{
-     res.json(await Post.findByIdAndDelete(req.params.id))
+     res.redirect("/user/profile")
     }catch{err=>console.log(err)}
   })
-
+  app.get("/editpost/:id",(req,res)=>{
+    Post.findById(req.params.id,(err,post)=>{
+        console.log(post);
+        res.render("edit.ejs",{index:req.params.id,post});
+    });
+  })
   app.put("/post/:id",async(req,res)=>{
     try{
-      res.json(await Post.findByIdAndUpdate(req.params.id,req.body,{new:true}))
+      await Post.findByIdAndUpdate(req.params.id,req.body,{new:true})
+      res.redirect("/user/profile")
     }catch{err=>console.log(err)}
   })
 
@@ -144,3 +170,20 @@ app.get("/", (req, res) => {
   })
 
 app.listen(PORT, () => console.log(`listening on PORT ${PORT}.`)); 
+
+/* 
+const {user,pwd} = req.body
+    if(!user || !pwd) return (res.status(400).json({'message':'Username and password are required.'}))
+    const duplicate= usersDB.find(person => person.username === user)
+    if(duplicate) return res.sendStatus(409);
+    try{
+        const hashedPwd =await bcrypt.hash(pwd, 10) //salt and hash
+        // require('crypto').randomeBytes(64).toString('hex')
+        const newUser ={"username":user, "password":hashedPwd}
+        res.json(await User.create(newUser))
+        
+
+    }catch(err){
+        res.status(500).json({'message':err.message})
+    }
+*/
