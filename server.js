@@ -47,9 +47,9 @@ app.options('*', cors())
 
 app.get("/", (req,res) =>{
   if(req.session.loggedIn){
-      res.render("userprofile.ejs",{currentUser:req.session.user})
+      res.redirect("/user/profile")
   }else{
-      res.render("login.ejs");
+      res.redirect("user/login");
   }
 })
   //User
