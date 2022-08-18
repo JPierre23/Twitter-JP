@@ -107,6 +107,7 @@ app.get("/", (req,res) =>{
   })
   app.delete("/post/:id",async(req,res)=>{
     try{
+      await Post.findByIdAndDelete(req.params.id)
      res.redirect("/user/profile")
     }catch{err=>console.log(err)}
   })
@@ -119,7 +120,7 @@ app.get("/", (req,res) =>{
   app.put("/post/:id",async(req,res)=>{
     try{
       await Post.findByIdAndUpdate(req.params.id,req.body,{new:true})
-      res.redirect("/user/profile")
+      res.redirect("/user/feed")
     }catch{err=>console.log(err)}
   })
 
