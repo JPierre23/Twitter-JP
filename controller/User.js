@@ -14,10 +14,7 @@ router.get("/signup", (req,res) =>{
   
   //sign up user - post --> collects data from user and stores in db
   router.post("/signup", async (req,res) => {
-    try{
-    await User.create(req.body)
-    }catch (err) {console.log(err)}
-    res.redirect("/user/login")
+    res.redirect("/user")
     //capture password hash it
     //store user data in db
     //redirect to login
