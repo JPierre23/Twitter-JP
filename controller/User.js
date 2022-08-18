@@ -16,9 +16,9 @@ router.get("/signup", (req,res) =>{
   router.post("/signup", async (req,res) => {
     
     User.create(req.body,(err,user) => {
-        if(err)console.log(err);
-        res.redirect("/user/login")
+        if(err)console.log(err);     
     })
+    res.redirect("/user/login")
     //capture password hash it
     //store user data in db
     //redirect to login
