@@ -165,6 +165,7 @@ app.get("/", (req,res) =>{
 
   app.put("/media/:id",async(req,res)=>{
     try{
+      let data;
       res.json(await Media.findByIdAndUpdate(req.params.id,req.body,{new:true}))
     }catch{err=>console.log(err)}
   })
