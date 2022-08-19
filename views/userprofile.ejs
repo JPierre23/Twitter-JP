@@ -12,17 +12,34 @@
         
         <%- include("partials/header.ejs") %> 
             <h1> This is profile </h1>
+            <div>
+                <div>
+                    <% post.forEach( p => { %>
+                        <h2><%= p.user  %></h2>
+                        <h3><%= p.date %></h3>
+                        <h4><%= p.description %></h4>   
+                        <form class="form" action="/editpost/<%=p.id%>"><button>Edit</button></form>
+                        <form class="form" action="/post/<%=p.id%>?_method=DELETE" method="post"><button>Delete</button></form> 
         
-            <% post.forEach( p => { %>
-                <h2><%= p.username  %></h2>
-                <h3><%= p.date %></h3>
-                <h4><%= p.description %></h4>   
-                <form class="form" action="/editpost/<%=p.id%>"><button>Edit</button></form>
-                <form class="form" action="/post/<%=p.id%>?_method=DELETE" method="post"><button>Delete</button></form> 
+                        <% }) %>
+        
+                        <form class="form" action="/newpost/"><button>New Post</button></form>
 
-                <% }) %>
+                    </div>
+                <aside>
+                    <% media.forEach( m => { %>
+                        <h2><%= m.user  %></h2>
+                        <img src="<%= m.img  %>" alt="m.user media post">
+                        <form class="form" action="/media/<%=m.id%>?_method=DELETE" method="post"><button>Delete</button></form>
+                        
+        
+                        <% }) %>
+                        <form class="form" action="/newmedia/"><button>Add Image </button></form>
 
-                <form class="form" action="/newpost/"><button>New Post</button></form>
+                </aside>
+
+           
+            </div>
             <%-include ("partials/footer.ejs") %>
 
     </body>

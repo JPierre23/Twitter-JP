@@ -9,12 +9,27 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        
         <%- include("partials/header.ejs") %> 
-            <h1> This is feed </h1>
+            <h1> This is Feed </h1>
+            <div>
+                <div>
+                    <% post.forEach( p => { %>
+                        <h2><%= p.user  %></h2>
+                        <h3><%= p.date %></h3>
+                        <h4><%= p.description %></h4>   
+                        <form class="form" action="/editpost/<%=p.id%>"><button>Edit</button></form>
+                        <form class="form" action="/post/<%=p.id%>?_method=DELETE" method="post"><button>Delete</button></form> 
         
+                        <% }) %>
         
-        
-        <%-include ("partials/footer.ejs") %>
+                        <form class="form" action="/newpost/"><button>New Post</button></form>
+
+                    </div>
+
+           
+            </div>
+            <%-include ("partials/footer.ejs") %>
 
     </body>
 </html>

@@ -46,25 +46,22 @@ router.get("/login", (req,res) =>{
     })
   })
 
-  router.get("/profile", (req,res) =>{
+  router.get("/profile", async(req,res) =>{
     
     if (!req.session.loggedIn) res.redirect('/user/login')
 
-    let data=[]
-    console.log(data[0])
-    Post.find({},async (err,allPosts)=>{
+    let data={}
+    const media= await Media.find({"user":req.session.user})
+    Post.find({"user":req.session.user},async (err,allPosts)=>{
       
       console.log(allPosts)
-      res.render("userprofile.ejs",{post:allPosts})
+      console.log(media)
+      res.render("userprofile.ejs",{post:allPosts,media})
     })
     
     
   })
 
-  router.get("/feed", (req,res) =>{
-    if (!req.session.loggedIn) res.redirect('/user/login')
-    res.render("feed.ejs")
-  })
   
   //logout
   router.get("/logout", (req,res) =>{

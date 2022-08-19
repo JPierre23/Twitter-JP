@@ -47,10 +47,14 @@ app.options('*', cors())
 
 app.get("/", (req,res) =>{
   if(req.session.loggedIn){
-      res.redirect("/user/profile")
+      res.render("index.ejs")
   }else{
       res.redirect("user/login");
   }
+})
+app.get("/about", (req,res) =>{
+      res.render("about.ejs")
+  
 })
   //User
  
@@ -120,7 +124,7 @@ app.get("/", (req,res) =>{
   app.put("/post/:id",async(req,res)=>{
     try{
       await Post.findByIdAndUpdate(req.params.id,req.body,{new:true})
-      res.redirect("/user/feed")
+      res.redirect("/feed")
     }catch{err=>console.log(err)}
   })
 
@@ -153,14 +157,21 @@ app.get("/", (req,res) =>{
       res.json(await Media.findByIdAndUpdate(req.params.id))
   }catch{err=>console.log(err)}
 })
+app.get("/newmedia", async(req,res)=>{
+  try{
+    res.render("newMedia.ejs")
+  }catch{err=>console.log(err)}
+})
   app.post("/media", async(req,res)=>{
     try{
-      res.json(await Media.create(req.body))
+      await Media.create(req.body)
+      res.redirect("/user/profile")
     }catch{err=>console.log(err)}
   })
   app.delete("/media/:id",async(req,res)=>{
     try{
-      res.json(await Media.findByIdAndDelete(req.params.id))
+      await Media.findByIdAndDelete(req.params.id)
+      res.redirect("/user/profile")
     }catch{err=>console.log(err)}
   })
 
@@ -169,6 +180,15 @@ app.get("/", (req,res) =>{
       
       res.json(await Media.findByIdAndUpdate(req.params.id,req.body,{new:true}))
     }catch{err=>console.log(err)}
+  })
+
+  app.get("/feed", (req,res) =>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
+    Post.find({},async (err,allPosts)=>{
+      
+      console.log(allPosts)
+      res.render("feed.ejs",{post:allPosts})
+    })
   })
 
 app.listen(PORT, () => console.log(`listening on PORT ${PORT}.`)); 
