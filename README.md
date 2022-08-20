@@ -9,10 +9,8 @@
 | Project Name | Twitter-JP |
 | Description | A website where users can interact with our community members. |
 | Developers | Jonathan Pierre |
-| Live Website (FrontEnd) | https://twitter-jp.netlify.app/ |
-| Repo-Frontend | https://github.com/JPierre23/Twitter-JP-frontend |
-| Live Website (BackEnd) | https://twitter-jp-backend.herokuapp.com/ |
-| Repo-Backend | https://github.com/JPierre23/Twitter-JP |
+| Live Website  | https://twitter-jp-backend.herokuapp.com/ |
+| Repo| https://github.com/JPierre23/Twitter-JP |
 | Trello Board | https://trello.com/b/Gouvq5rE/twitter-jp |
 
 ## Technologies Used
@@ -44,3 +42,5 @@ Enables members of a community to be able to interact with each other
 
 
 ## Future Enhancements
+- OAuth
+- Authorization
