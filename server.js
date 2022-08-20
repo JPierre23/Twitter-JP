@@ -112,7 +112,7 @@ app.get("/about", (req,res) =>{
   app.get("/newpost", async(req,res)=>{
     if (!req.session.loggedIn) res.redirect('/user/login')
     try{
-      res.render("new.ejs",{"user":res.session.user})
+      res.render("new.ejs",{"user":req.session.user})
     }catch{err=>console.log(err)}
   })
   app.post("/post", async(req,res)=>{
