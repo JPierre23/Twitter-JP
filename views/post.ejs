@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <%- include("partials/head.ejs") %>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <main>
+        <%- include("partials/header.ejs") %> 
+            <h1> This is Post </h1>
+            <div class="col s12 m6">
+                <ul class="collection">
+                    <li class="collection-item avatar black">
+                    <span class="title"> <a href="/thread/<%= post.id  %>"><h2><%= post.user  %></h2></span>
+                        <p>  
+                        <h3 class="white-text"><%= post.date.toLocaleDateString("en-US") %></h3><br>
+                        <h4 class="white-text"><%= post.description %></h4><br>
+                        </p>
+                        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                    </li>
+                </ul>  
+                <% if(comment) {%>
+                <ul class="collection">
+                    <% comment.forEach( c => { %>
+                    <li class="collection-item avatar">
+                      <img src="images/yuna.jpg" alt="user img" class="circle">
+                      <span class="title"><h2><%= c.user  %></h2></span>
+                      <p class="flow-text"> <%= c.date.toLocaleDateString("en-US") %><br>
+                        <h4><%= c.description %></h4> 
+                      </p>
+                      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                    </li>
+                    <div>
+                                  
+                
+                    <% }) %>
+                    <% } %>
+                    </div>
+    
+                    <form class="form" action="/comment" method="post">
+                        <input type="hidden" name="user" value="<%= user  %>"> <br>
+                        <input type="hidden" name="post_id" value="<%= post.id  %>"> <br>
+                        Reply: <input type="textbox" name="description" ><br><br>
+                        
+                        <button>Submit</button>
+                    </form>
+
+            </div>
+        </main>
+        
+        
+        <%-include ("partials/footer.ejs") %>
+
+    </body>
+</html>

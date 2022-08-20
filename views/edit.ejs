@@ -11,13 +11,14 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <%- include("partials/header.ejs") %> 
+        <main>
+            <form action="/post/<%= post.id %>?_method=PUT" method="post"> 
 
-<form action="/post/<%=post.id%>?_method=PUT" method="post"> 
-
-    UserName: <input type="textbox" name="user" value=" <%=post.user%> "<br>
-    Desctiption: <input type="textbox" name="description" value="<%=post.description%>"><br><br>
-    <button>Submit</button>
-</form>
+                UserName: <input type="textbox" name="user" value=" <%=post.user%> "/><br>
+                Desctiption: <input type="textbox" name="description" value="<%=post.description%>"><br><br>
+                <button>Submit</button>
+            </form>
+        </main>
 
 
 <%-include ("partials/footer.ejs") %>

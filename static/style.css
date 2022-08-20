@@ -1,6 +1,21 @@
-body{
-    background-color: gainsboro;
-    width: 90%;
+main{
+    background-color: white;
+    color: black;
+    width: 80%;
     margin: 0 auto;
     text-align: center;
+}
+img{
+    width: 30px;
+    height: auto;
+    object-fit: cover;
+}
+
+footer{
+    position:static;
+    bottom:0;
+    width: 100%;
+    height: auto;
+    margin-top: 40px ;
+    
 }

@@ -11,35 +11,52 @@
         <![endif]-->
         
         <%- include("partials/header.ejs") %> 
-            <h1> This is profile </h1>
-            <div>
-                <div>
-                    <% post.forEach( p => { %>
-                        <h2><%= p.user  %></h2>
-                        <h3><%= p.date %></h3>
-                        <h4><%= p.description %></h4>   
-                        <form class="form" action="/editpost/<%=p.id%>"><button>Edit</button></form>
-                        <form class="form" action="/post/<%=p.id%>?_method=DELETE" method="post"><button>Delete</button></form> 
-        
-                        <% }) %>
-        
-                        <form class="form" action="/newpost/"><button>New Post</button></form>
-
-                    </div>
-                <aside>
-                    <% media.forEach( m => { %>
-                        <h2><%= m.user  %></h2>
-                        <img src="<%= m.img  %>" alt="m.user media post">
-                        <form class="form" action="/media/<%=m.id%>?_method=DELETE" method="post"><button>Delete</button></form>
-                        
-        
-                        <% }) %>
-                        <form class="form" action="/newmedia/"><button>Add Image </button></form>
-
-                </aside>
-
-           
+            
+            <main>
+                <h1> This is profile </h1>
+                <div class="col s12 m6">
+                    <ul class="collection">
+                        <% post.forEach( p => { %>
+                        <li class="collection-item avatar black">
+                            <span class="title"> <a href="/thread/<%= p.id  %>"><h2><%= p.user  %></h2></span>
+                            <p>  
+                            <h3 class="white-text"><%= p.date.toLocaleDateString("en-US") %></h3><br>
+                            <h4 class="white-text"><%= p.description %></h4><br>
+                            </p>
+                            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                            
+                            <form class="form" action="/editpost/<%=p.id%>"><button class="waves-effect waves-light btn round white black-text">Edit</button></form>
+                            <form class="form" action="/post/<%=p.id%>?_method=DELETE" method="post"><button class="waves-effect waves-light btn white black-text">Delete</button></form> 
+                          
+                        </li>
+                            <% }) %>
+                        <div class="collection-item avatar ">
+                                <form class="form" action="/newpost/"><button class="waves-effect waves-light btn-large black white-text">New Post</button></form>
+                        </div>
+                </ul>
             </div>
+               
+               
+               <div class="col s12 m6">
+                <ul class="collection black white-text">
+                    <% media.forEach( m => { %>
+                        <div class="card ">
+                        <h2><%= m.user  %></h2>
+                        <div class="card-image  ">
+                          <img src="<%= m.img %>" class="circle responsive-img" alt="m.user media post">
+                        </div>
+                          <form class="form" action="/media/<%=m.id%>?_method=DELETE" method="post"><button class="waves-effect waves-light btn white black-text">Delete</button></form>
+                        </div>
+                        <div class="divider"></div>
+                        <% }) %>
+                        
+                </ul>
+                    <div class="collection-item avatar">
+                        <form class="form" action="/newmedia/"><button class="waves-effect waves-light btn-large black white-text">Add Image </button></form>
+                    </div>
+
+               </div>
+            </main>
             <%-include ("partials/footer.ejs") %>
 
     </body>

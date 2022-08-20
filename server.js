@@ -3,8 +3,9 @@ require("dotenv").config()
 // Models 
 const User = require("./model/User");
 const Post = require("./model/Post");
-const Media=require("./model/Media");
 
+const Comment=require("./model/Comment");
+const Media=require("./model/Media");
 // Configs
 const PORT = process.env.PORT||3001
 const express = require("express")
@@ -95,7 +96,10 @@ app.get("/about", (req,res) =>{
   })
   app.get("/post/:id", async(req,res)=>{
     try{
-     res.render("edit.ejs",{})
+      await Post.findById(req.params.id,(err,post)=>{
+        console.log(post);
+        res.render("edit.ejs",{post});
+    });
     }catch{err=>console.log(err)}
   })
   app.get("/newpost", async(req,res)=>{
@@ -125,61 +129,75 @@ app.get("/about", (req,res) =>{
     try{
       await Post.findByIdAndUpdate(req.params.id,req.body,{new:true})
       res.redirect("/feed")
-    }catch{err=>console.log(err)}
+    }catch(err){console.log(err)}
+  })
+
+  app.get("/thread/:id",async(req,res)=>{
+    try{
+      const comment= await Comment.find({"post_id":req.params.id})
+      Post.findById(req.params.id,(err,post)=>{
+        console.log(post);
+        res.render("post.ejs",{post,comment,user:req.session.user})
+      })
+
+     
+    }catch(err){console.log(err)}
   })
 
   //Comments
   app.get("/comment/:id", async(req,res)=>{
     try{
       res.json(await Comment.findByIdAndUpdate(req.params.id))
-    }catch{err=>console.log(err)}
+    }catch(err){console.log(err)}
   })
   app.post("/comment", async(req,res)=>{
     try{
-      res.json(await Comment.create(req.body))
-    }catch{err=>console.log(err)}
+      console.log(req.body)
+      await Comment.create(req.body)
+      res.redirect(`/thread/${req.body.post_id}`)
+    }catch(err){console.log(err)}
   })
   app.delete("/comment/:id",async(req,res)=>{
     try{
       res.json(await Comment.findByIdAndDelete(req.params.id))
-    }catch{err=>console.log(err)}
+    }catch(err){console.log(err)}
   })
 
   app.put("/comment/:id",async(req,res)=>{
     try{
       res.json(await Comment.findByIdAndUpdate(req.params.id,req.body,{new:true}))
-      }catch{err=>console.log(err)}
+      }catch(err){console.log(err)}
   })
 
   //Media
   app.get("/media/:id", async(req,res)=>{
     try{
       res.json(await Media.findByIdAndUpdate(req.params.id))
-  }catch{err=>console.log(err)}
+  }catch(err){console.log(err)}
 })
 app.get("/newmedia", async(req,res)=>{
   try{
     res.render("newMedia.ejs")
-  }catch{err=>console.log(err)}
+  }catch(err){console.log(err)}
 })
   app.post("/media", async(req,res)=>{
     try{
       await Media.create(req.body)
       res.redirect("/user/profile")
-    }catch{err=>console.log(err)}
+    }catch(err){console.log(err)}
   })
   app.delete("/media/:id",async(req,res)=>{
     try{
       await Media.findByIdAndDelete(req.params.id)
       res.redirect("/user/profile")
-    }catch{err=>console.log(err)}
+    }catch(err){console.log(err)}
   })
 
   app.put("/media/:id",async(req,res)=>{
     try{
       
       res.json(await Media.findByIdAndUpdate(req.params.id,req.body,{new:true}))
-    }catch{err=>console.log(err)}
+    }catch(err){console.log(err)}
   })
 
   app.get("/feed", (req,res) =>{

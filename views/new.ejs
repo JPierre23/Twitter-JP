@@ -11,16 +11,16 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <%- include("partials/header.ejs") %> 
-            
-<h1>Create a new post</h1>
-<form action="/post" method="post"> 
+        <main>
+            <h1>Create a new post</h1>
+            <form action="/post" method="post"> 
 
-    UserName: <input type="text" name="user"> <br>
-    Descritption: <input type="textbox" name="description" ><br><br>
-    <button>Submit</button>
-</form>
+                UserName: <input type="text" name="user"> <br>
+                Descritption: <input type="textbox" name="description" ><br><br>
+                <button>Submit</button>
+            </form>
 
-
+        </main>
 <%-include ("partials/footer.ejs") %>
 
 </body>

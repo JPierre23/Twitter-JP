@@ -12,23 +12,23 @@
         
         <%- include("partials/header.ejs") %> 
             <h1> This is Feed </h1>
-            <div>
-                <div>
-                    <% post.forEach( p => { %>
-                        <h2><%= p.user  %></h2>
-                        <h3><%= p.date %></h3>
-                        <h4><%= p.description %></h4>   
-                        <form class="form" action="/editpost/<%=p.id%>"><button>Edit</button></form>
-                        <form class="form" action="/post/<%=p.id%>?_method=DELETE" method="post"><button>Delete</button></form> 
-        
-                        <% }) %>
-        
-                        <form class="form" action="/newpost/"><button>New Post</button></form>
+            <main>
+                <div class="col s12 m6">
+                    <ul class="collection">
+                        <% post.forEach( p => { %>
+                        <li class="collection-item avatar black">
+                            <span class="title"> <a href="/thread/<%= p.id  %>"><h2><%= p.user  %></h2></span>
+                            <p>  
+                            <h3 class="white-text"><%= p.date.toLocaleDateString("en-US") %></h3><br>
+                            <h4 class="white-text"><%= p.description %></h4><br>
+                            </p>
+                            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                            
+                        </li>
+                            <% }) %>
 
-                    </div>
-
-           
-            </div>
+                    </ul>
+            </main>
             <%-include ("partials/footer.ejs") %>
 
     </body>
