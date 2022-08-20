@@ -37,17 +37,17 @@ router.get("/login", (req,res) =>{
     User.findOne({user},async (err,person)=>{       
         const data = await person;
 
-        if(err || !data || data==null) {res.redirect("/user/login")};
+        if(err || !data || data==null) {return res.redirect("/user/login")};
        
         const passwordMatches = pwd===data.pwd ? true : false 
         console.log(passwordMatches)
         if(passwordMatches===false) {
           
-          res.redirect("/user/signup")
+         return res.redirect("/user/signup")
         }
         req.session.loggedIn= true;
         req.session.user=user;
-        res.redirect("/user/profile")
+        return res.redirect("/user/profile")
     })
     
   }catch(err){
