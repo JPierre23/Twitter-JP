@@ -32,7 +32,7 @@ router.get("/login", (req,res) =>{
   //log in send user data to server - post
   router.post("/login", (req,res) =>{
     const {user,pwd} = req.body;
-    console.log(user)
+    // console.log(user)
     try{
     User.findOne({user},async (err,person)=>{       
         const data = await person;
@@ -61,12 +61,11 @@ router.get("/login", (req,res) =>{
     
     if (!req.session.loggedIn) res.redirect('/user/login')
 
-    let data={}
     const media= await Media.find({"user":req.session.user})
     Post.find({"user":req.session.user},async (err,allPosts)=>{
       
-      console.log(allPosts)
-      console.log(media)
+    //  console.log(allPosts)
+    //  console.log(media)
       res.render("userprofile.ejs",{post:allPosts,media})
     })
     

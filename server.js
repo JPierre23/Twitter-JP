@@ -97,7 +97,7 @@ app.get("/about", (req,res) =>{
   app.get("/post/:id", async(req,res)=>{
     try{
       await Post.findById(req.params.id,(err,post)=>{
-        console.log(post);
+        // console.log(post);
         res.render("edit.ejs",{post});
     });
     }catch{err=>console.log(err)}
@@ -121,7 +121,7 @@ app.get("/about", (req,res) =>{
   })
   app.get("/editpost/:id",(req,res)=>{
     Post.findById(req.params.id,(err,post)=>{
-        console.log(post);
+        // console.log(post);
         res.render("edit.ejs",{index:req.params.id,post});
     });
   })
@@ -136,7 +136,7 @@ app.get("/about", (req,res) =>{
     try{
       const comment= await Comment.find({"post_id":req.params.id})
       Post.findById(req.params.id,(err,post)=>{
-        console.log(post);
+        // console.log(post);
         res.render("post.ejs",{post,comment,user:req.session.user})
       })
 
@@ -152,7 +152,7 @@ app.get("/about", (req,res) =>{
   })
   app.post("/comment", async(req,res)=>{
     try{
-      console.log(req.body)
+      // console.log(req.body)
       await Comment.create(req.body)
       res.redirect(`/thread/${req.body.post_id}`)
     }catch(err){console.log(err)}
@@ -204,7 +204,7 @@ app.get("/newmedia", async(req,res)=>{
     if (!req.session.loggedIn) res.redirect('/user/login')
     Post.find({},async (err,allPosts)=>{
       
-      console.log(allPosts)
+      // console.log(allPosts)
       res.render("feed.ejs",{post:allPosts})
     })
   })
