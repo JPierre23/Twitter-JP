@@ -27,7 +27,7 @@ Enables members of a community to be able to interact with each other
 ## User Stories
 - Users should be able to access the site
 - As a user I should be able to signup / login to a created account
-- As a user I should only be able to Create, Edit, Delete my own posts, and comments.
+- As a user I should only be able to Create, Edit, Delete my own posts.
 - As a user I should be able to view different posts created by other users.
 - As a user I should be able to leave comments on posts.
 - As a user I should be able to easily navigate through the website.
