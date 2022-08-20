@@ -104,7 +104,7 @@ app.get("/about", (req,res) =>{
   })
   app.get("/newpost", async(req,res)=>{
     try{
-      res.render("new.ejs")
+      res.render("new.ejs",{"user":res.session.user})
     }catch{err=>console.log(err)}
   })
   app.post("/post", async(req,res)=>{

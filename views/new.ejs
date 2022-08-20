@@ -15,7 +15,7 @@
             <h1>Create a new post</h1>
             <form action="/post" method="post"> 
 
-                UserName: <input type="text" name="user"> <br>
+                <input type="hidden" name="user" value="<%= user %>"> <br>
                 Descritption: <input type="textbox" name="description" ><br><br>
                 <button>Submit</button>
             </form>
