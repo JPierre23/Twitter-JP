@@ -45,11 +45,13 @@ router.get("/login", (req,res) =>{
         req.session.user=user;
         res.redirect("/")
     })
+    res.redirect("/")
   }catch(err){
     console.log(err)
-    res.redirect("/")
+   
   }
   })
+  
 
   router.get("/profile", async(req,res) =>{
     
