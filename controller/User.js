@@ -36,9 +36,10 @@ router.get("/login", (req,res) =>{
     try{
     User.findOne({user},async (err,person)=>{       
         const data = await person;
+
         if(err || !data || data==null) {res.redirect("/user/login")};
        
-        const passwordMatches = pwd===data.pwd ? true : false ;
+        const passwordMatches = pwd===data.pwd ? true : false 
         console.log(passwordMatches)
         if(passwordMatches===false) {
           
