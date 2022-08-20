@@ -33,7 +33,7 @@ router.get("/login", (req,res) =>{
   router.post("/login", (req,res) =>{
     const {user,pwd} = req.body;
     console.log(user)
-    User.findOne({user},async (err,person)=>{       
+    User.find({user},async (err,person)=>{       
         const data = await person;
         if(err || !data || data==null) res.redirect("/user/login");
         console.log(data)
