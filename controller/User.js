@@ -41,8 +41,8 @@ router.get("/login", (req,res) =>{
         const passwordMatches = pwd===data.pwd ? true : false ;
         console.log(passwordMatches)
         if(passwordMatches===false) {
-          user=null
-          res.redirect("/")
+          
+          res.redirect("/user/signup")
         }
         req.session.loggedIn= true;
         req.session.user=user;
