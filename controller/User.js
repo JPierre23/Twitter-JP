@@ -45,7 +45,7 @@ router.get("/login", (req,res) =>{
         req.session.user=user;
         res.redirect("/user/profile")
     })
-    res.redirect("/")
+    
   }catch(err){
     console.log(err)
    
