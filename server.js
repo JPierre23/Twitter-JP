@@ -60,22 +60,26 @@ app.get("/about", (req,res) =>{
   //User
  
   app.get("/user", async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
      res.json(await User.find({}))
     }catch{err=>console.log(err)}
   })
   app.get("/user/:id", async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       res.json(await User.findByIdAndUpdate(req.params.id))
     }catch{err=>console.log(err)}
   })
   app.post("/user", async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     
     try{
       res.json(await User.create(req.body))
     }catch{err=>console.log(err)}
   })
   app.delete("/user/:id",async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       res.json(await User.findByIdAndDelete(req.params.id))
     }catch{err=>console.log(err)}
@@ -83,6 +87,7 @@ app.get("/about", (req,res) =>{
 
 
   app.put("/user/:id",async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       res.json(await User.findByIdAndUpdate(req.params.id,req.body,{new:true}))
     }catch{err=>console.log(err)}
@@ -90,11 +95,13 @@ app.get("/about", (req,res) =>{
 
   //Posts  
   app.get("/post", async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       res.json(await Post.find({}))
     }catch{err=>console.log(err)}
   })
   app.get("/post/:id", async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       await Post.findById(req.params.id,(err,post)=>{
         // console.log(post);
@@ -103,29 +110,34 @@ app.get("/about", (req,res) =>{
     }catch{err=>console.log(err)}
   })
   app.get("/newpost", async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       res.render("new.ejs",{"user":res.session.user})
     }catch{err=>console.log(err)}
   })
   app.post("/post", async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       await Post.create(req.body)
       res.redirect("/user/profile")
     }catch{err=>console.log(err)}
   })
   app.delete("/post/:id",async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       await Post.findByIdAndDelete(req.params.id)
      res.redirect("/user/profile")
     }catch{err=>console.log(err)}
   })
   app.get("/editpost/:id",(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     Post.findById(req.params.id,(err,post)=>{
         // console.log(post);
         res.render("edit.ejs",{index:req.params.id,post});
     });
   })
   app.put("/post/:id",async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       await Post.findByIdAndUpdate(req.params.id,req.body,{new:true})
       res.redirect("/feed")
@@ -133,6 +145,7 @@ app.get("/about", (req,res) =>{
   })
 
   app.get("/thread/:id",async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       const comment= await Comment.find({"post_id":req.params.id})
       Post.findById(req.params.id,(err,post)=>{
@@ -146,11 +159,13 @@ app.get("/about", (req,res) =>{
 
   //Comments
   app.get("/comment/:id", async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       res.json(await Comment.findByIdAndUpdate(req.params.id))
     }catch(err){console.log(err)}
   })
   app.post("/comment", async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       // console.log(req.body)
       await Comment.create(req.body)
@@ -158,12 +173,14 @@ app.get("/about", (req,res) =>{
     }catch(err){console.log(err)}
   })
   app.delete("/comment/:id",async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       res.json(await Comment.findByIdAndDelete(req.params.id))
     }catch(err){console.log(err)}
   })
 
   app.put("/comment/:id",async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       res.json(await Comment.findByIdAndUpdate(req.params.id,req.body,{new:true}))
       }catch(err){console.log(err)}
@@ -171,22 +188,26 @@ app.get("/about", (req,res) =>{
 
   //Media
   app.get("/media/:id", async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       res.json(await Media.findByIdAndUpdate(req.params.id))
   }catch(err){console.log(err)}
 })
 app.get("/newmedia", async(req,res)=>{
+  if (!req.session.loggedIn) res.redirect('/user/login')
   try{
     res.render("newMedia.ejs")
   }catch(err){console.log(err)}
 })
   app.post("/media", async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       await Media.create(req.body)
       res.redirect("/user/profile")
     }catch(err){console.log(err)}
   })
   app.delete("/media/:id",async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       await Media.findByIdAndDelete(req.params.id)
       res.redirect("/user/profile")
@@ -194,6 +215,7 @@ app.get("/newmedia", async(req,res)=>{
   })
 
   app.put("/media/:id",async(req,res)=>{
+    if (!req.session.loggedIn) res.redirect('/user/login')
     try{
       
       res.json(await Media.findByIdAndUpdate(req.params.id,req.body,{new:true}))
@@ -201,6 +223,7 @@ app.get("/newmedia", async(req,res)=>{
   })
 
   app.get("/feed", (req,res) =>{
+    
     if (!req.session.loggedIn) res.redirect('/user/login')
     Post.find({},async (err,allPosts)=>{
       
