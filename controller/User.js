@@ -43,7 +43,7 @@ router.get("/login", (req,res) =>{
         console.log(passwordMatches)
         if(passwordMatches===false) {
           
-         return res.redirect("/user/signup")
+         return res.redirect("/user/login")
         }
         req.session.loggedIn= true;
         req.session.user=user;
