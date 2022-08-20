@@ -18,7 +18,7 @@
                     <ul class="collection">
                         <% post.forEach( p => { %>
                         <li class="collection-item avatar black">
-                            <span class="title"> <a href="/thread/<%= p.id  %>"><h2><%= p.user  %></h2></span>
+                            <span class="title"> <a href="/thread/<%= p.id %>"><h2><%= p.user  %></h2></span>
                             <p>  
                             <h3 class="white-text"><%= p.date.toLocaleDateString("en-US") %></h3><br>
                             <h4 class="white-text"><%= p.description %></h4><br>
