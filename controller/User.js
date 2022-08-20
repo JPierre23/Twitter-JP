@@ -33,6 +33,7 @@ router.get("/login", (req,res) =>{
   router.post("/login", (req,res) =>{
     const {user,pwd} = req.body;
     console.log(user)
+    try{
     User.find({user},async (err,person)=>{       
         const data = await person;
         if(err || !data || data==null) res.redirect("/user/login");
@@ -44,6 +45,10 @@ router.get("/login", (req,res) =>{
         req.session.user=user;
         res.redirect("/")
     })
+  }catch(err){
+    console.log(err)
+    res.redirect("/")
+  }
   })
 
   router.get("/profile", async(req,res) =>{
