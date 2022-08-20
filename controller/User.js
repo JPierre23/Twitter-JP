@@ -34,7 +34,7 @@ router.get("/login", (req,res) =>{
     const {user,pwd} = req.body;
     console.log(user)
     try{
-    User.find({user},async (err,person)=>{       
+    User.findOne({user},async (err,person)=>{       
         const data = await person;
         if(err || !data || data==null) res.redirect("/user/login");
         console.log(data)
